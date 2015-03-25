@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var pkg = require('../package.json');
+var to6 = require('../');
+var glob = require('glob');
+
+program
+	.usage('[options] <file or dir ...>')
+	.description('Transform ES5 code on a file or directory into ES6 code.')
+	.version(pkg.version)
+	.option('-d, --out-dir [dir]', 'Directory for the output', '/tmp/5to6')
+	.parse(process.argv);
+
+var files = program.args;
+
+if (!files.length) {
+	return program.outputHelp();
+}
+
+/**
+ * Guess if this is a directory.
+ * @param file
+ */
+function isDir(file) {
+	var dotPosition = file.indexOf('.');
+	var slashPosition = file.lastIndexOf('/');
+	return (dotPosition === 0 || dotPosition === -1)  || // . or no dot is usually a dir
+		(file.indexOf('/') === 0 || slashPosition == file.length - 1); // start or end with /
+}
+
+if (files.length === 1 && isDir(files[0])) {
+	files = glob.sync('/**/*.js', {
+		root: files[0]
+	}).filter(function(name) {
+		return name.indexOf('node_modules') === -1;
+	});
+}
+
+to6(files, {
+	outDir: program.outDir
+});

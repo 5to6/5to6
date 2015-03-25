@@ -20,6 +20,7 @@ var util = require('util');
 module.exports = function (ast) {
 
 	var transformedAST = ast;
+	var isAMD = false;
 
 	estraverse.replace(ast, {
 		enter: function(node) {
