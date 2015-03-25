@@ -7,6 +7,7 @@ Move your project into the future.
 
 ### Todo
 
+- [ ] Finish the CLI
 - [x] AMD to CJS Modules
 - [ ] AMD to ES6 Modules
 - [ ] CJS to ES6 Modules
