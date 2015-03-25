@@ -3,7 +3,7 @@ Move your project into the future.
 
 ### Usage
 
-`node index.js test/fixture/amd.js`
+`./bin/5to6.js test/fixture/amd.js`
 
 ### Todo
 

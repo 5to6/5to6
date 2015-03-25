@@ -6,6 +6,9 @@
   "scripts": {
     "test": "eslint . && mocha tests/"
   },
+  "bin": {
+    "5to6": "./bin/5to6"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {

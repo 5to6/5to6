@@ -1,35 +1,29 @@
-var program = require('commander');
-var pkg = require('./package.json');
 var async = require('async');
 var fs = require('fs');
 var path = require('path');
 var espree = require('espree');
 var escodegen = require('escodegen');
 var startTime = Date.now();
-
-program
-	.version(pkg.version)
-	.option('-x, --ext', 'Add peppers')
-	.option('-P, --pineapple', 'Add pineapple')
-	.option('-b, --bbq', 'Add bbq sauce')
-	.option('-c, --cheese [type]', 'Add the specified type of cheese [marble]', 'marble')
-	// .command(' <dir1> <dir2>')
-	// .description('execute the given remote cmd')
-	.parse(process.argv);
-
 var transforms = require('requireindex')('./transforms');
-var files = program.args; // TODO: glob
 
-async.each(files, applyTransforms, report);
-
-function report(err) {
+/**
+ * Display a report based on what happened during the running of the program.
+ * @param err {Error}
+ * @param files {Array}
+ */
+function report(err, files) {
 	if (err) {
 		console.error(err);
 		return;
 	}
-	console.log("Applied " + files.length + " transforms in " + (Date.now() - startTime) + " ms.");
+	console.log("Applied " + Object.keys(transforms).length + " transforms to " + files.length + " file(s) in " + (Date.now() - startTime) + " ms.");
 }
 
+/**
+ * Apply all of the available transforms to a single file.
+ * @param filename {String}
+ * @param callback {Function}
+ */
 function applyTransforms(filename, callback) {
 	fs.readFile(path.resolve(filename), { encoding: 'utf8' }, function(err, data) {
 		var ast, out, transform;
@@ -47,9 +41,16 @@ function applyTransforms(filename, callback) {
 
 		out = escodegen.generate(ast);
 
-		// what should we actually do with the data?
-		console.log(out);
+		callback(null, out);
+	});
+}
 
-		callback();
+/**
+ * Apply transforms to each files
+ * @param files {Array}
+ */
+module.exports = function(files) {
+	async.each(files, applyTransforms, function(err) {
+		report(err, files)
 	});
 }
