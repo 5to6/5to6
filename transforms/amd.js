@@ -11,12 +11,7 @@ var util = require('util');
  *
  * This transform translates AMD modules into CommonJS modules.  AMD modules
  * are defined by calling the `define` function that is available as a free
- * or global variable.  The transform translates that call into traditional
- * CommonJS require statements.  Any value returned from the factory function
- * is assigned to `module.exports`.
- *
- * After the transform is complete, Browserify will be able to parse and
- * bundle the module as if it were a Node.js module.
+ * or global variable.
  *
  * @param {String} file
  * @return {Stream}
