@@ -3,6 +3,19 @@ Move your project into the future.
 
 ### Usage
 
+```
+Usage: 5to6 [options] <file or dir ...>
+
+Transform ES5 code on a file or directory into ES6 code.
+
+Options:
+
+-h, --help           output usage information
+-V, --version        output the version number
+-d, --out-dir [dir]  Directory for the output
+
+```
+
 ###### File:
 
 ```
