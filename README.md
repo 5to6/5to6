@@ -52,6 +52,9 @@ Applied 2 transforms to 3 file(s) in 29 ms.
 - [ ] IIFE to ES6 Modules
 - [ ] Prototype to `Class`
 - [ ] Functions to `=>`
+- [ ] Enhanced object literals
+  - `{baz: baz}` to `{baz}`
+  - `{foo: function() {}}` to `{foo() {}}`
 
 
 ### Ideas
