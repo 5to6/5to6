@@ -48,7 +48,13 @@ function applyTransforms(options, callback) {
 
 		try {
 			out = escodegen.generate(ast, {
-				comment: true
+				comment: true,
+				format: {
+					indent: {
+						adjustMultilineComment: true
+					}
+				}
+
 			});
 		} catch(e) {
 			return callback(e);
