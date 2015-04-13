@@ -51,7 +51,9 @@ function applyTransforms(options, callback) {
 			out = escodegen.generate(ast, {
 				comment: true,
 				format: {
+					preserveBlankLines: true,
 					indent: {
+						style: '\t',
 						adjustMultilineComment: true
 					}
 				}
@@ -65,7 +67,6 @@ function applyTransforms(options, callback) {
 		console.log('Writing ' + outfile);
 		fs.writeFile(outfile, out, callback);
 		// console.log(out, "");
-
 		// callback(null, out);
 	});
 }
