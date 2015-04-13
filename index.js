@@ -32,7 +32,11 @@ function applyTransforms(options, callback) {
 		var ast, out, transform;
 		if (err) return callback(err);
 		try {
-			ast = espree.parse(data);
+			ast = espree.parse(data, {
+				attachComment: true,
+				range: true,
+				tokens: true
+			});
 		} catch (e) {
 			return callback(new Error('Error parsing ' + filename));
 		}
@@ -43,12 +47,16 @@ function applyTransforms(options, callback) {
 		}
 
 		try {
-			out = escodegen.generate(ast);
+			out = escodegen.generate(ast, {
+				comment: true
+			});
 		} catch(e) {
 			return callback(e);
 		}
 
 		console.log('Writing ' + path.resolve(outDir, filename));
+		console.log(out);
+		console.log("");
 
 		callback(null, out);
 	});
