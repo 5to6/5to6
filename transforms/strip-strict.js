@@ -15,8 +15,6 @@ module.exports = function (ast) {
 			if (node.type === 'ExpressionStatement' && node.expression.type === 'Literal' && node.expression.value === 'use strict') {
 				this.remove();
 			}
-		},
-		leave: function(node) {
 		}
 	});
 

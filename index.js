@@ -5,6 +5,7 @@ var espree = require('espree');
 var escodegen = require('escodegen');
 var startTime = Date.now();
 var transforms = require('requireindex')('./transforms');
+var util = require('util');
 
 /**
  * Display a report based on what happened during the running of the program.
@@ -60,11 +61,12 @@ function applyTransforms(options, callback) {
 			return callback(e);
 		}
 
-		console.log('Writing ' + path.resolve(outDir, filename));
-		console.log(out);
-		console.log("");
+		var outfile = path.resolve(outDir, filename);
+		console.log('Writing ' + outfile);
+		fs.writeFile(outfile, out, callback);
+		// console.log(out, "");
 
-		callback(null, out);
+		// callback(null, out);
 	});
 }
 

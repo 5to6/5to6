@@ -47,6 +47,7 @@ Applied 2 transforms to 3 file(s) in 29 ms.
 
 - [ ] Finish the CLI
 - [x] AMD to CJS Modules
+- [x] strip "use strict" statements
 - [ ] AMD to ES6 Modules
 - [ ] CJS to ES6 Modules
 - [ ] IIFE to ES6 Modules

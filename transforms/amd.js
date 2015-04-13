@@ -4,6 +4,8 @@
 var estraverse = require('estraverse');
 // var util = require('util');
 
+var pageLevelComments;
+
 
 /**
  * Transform AMD to CommonJS.
@@ -20,6 +22,7 @@ module.exports = function (ast) {
 
 	var transformedAST = ast;
 	var isAMD = false;
+	pageLevelComments = [];
 
 	estraverse.replace(ast, {
 		enter: function(node) {
@@ -30,6 +33,7 @@ module.exports = function (ast) {
 				// `define` at the top-level.  Any CommonJS or UMD modules are pass
 				// through unmodified.
 				if (parents.length == 2 && parents[0].type == 'Program' && parents[1].type == 'ExpressionStatement') {
+					pageLevelComments = parents[1].leadingComments;
 					isAMD = true;
 				}
 			}
@@ -118,8 +122,13 @@ function isReturn(node) {
 }
 
 function createProgram(body) {
-	return { type: 'Program',
-		body: body };
+	if (pageLevelComments) {
+		body[0].leadingComments = pageLevelComments;
+	}
+	return {
+		type: 'Program',
+		body: body
+	};
 }
 
 function createRequires(ids, vars) {

@@ -25,7 +25,7 @@ if (!files.length) {
 function isDir(file) {
 	var dotPosition = file.indexOf('.');
 	var slashPosition = file.lastIndexOf('/');
-	return (dotPosition === 0 || dotPosition === -1)  || // . or no dot is usually a dir
+	return ((dotPosition === 0 && file.length === 1) || dotPosition === -1)  || // . or no dot is usually a dir
 		(file.indexOf('/') === 0 || slashPosition == file.length - 1); // start or end with /
 }
 
