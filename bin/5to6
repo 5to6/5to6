@@ -9,6 +9,7 @@ program
 	.usage('[options] <file or dir ...>')
 	.description('Transform ES5 code on a file or directory into ES6 code.')
 	.version(pkg.version)
+	.option('-r, --dry-run', 'Just do a dry run to see the output')
 	.option('-d, --out-dir [dir]', 'Directory for the output', '/tmp/5to6')
 	.parse(process.argv);
 
@@ -38,5 +39,6 @@ if (files.length === 1 && isDir(files[0])) {
 }
 
 to6(files, {
+	dryRun: program.dryRun,
 	outDir: program.outDir
 });

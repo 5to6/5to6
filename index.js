@@ -5,7 +5,7 @@ var espree = require('espree');
 var escodegen = require('escodegen');
 var startTime = Date.now();
 var transforms = require('requireindex')('./transforms');
-var util = require('util');
+// var util = require('util');
 
 /**
  * Display a report based on what happened during the running of the program.
@@ -51,9 +51,9 @@ function applyTransforms(options, callback) {
 			out = escodegen.generate(ast, {
 				comment: true,
 				format: {
-					preserveBlankLines: true,
+					preserveBlankLines: true, // TODO: make this actually work
 					indent: {
-						style: '\t',
+						style: '\t', // TODO: make this all customizable
 						adjustMultilineComment: true
 					}
 				}
@@ -65,9 +65,12 @@ function applyTransforms(options, callback) {
 
 		var outfile = path.resolve(outDir, filename);
 		console.log('Writing ' + outfile);
-		fs.writeFile(outfile, out, callback);
-		// console.log(out, "");
-		// callback(null, out);
+		if (!options.dryRun) {
+			fs.writeFile(outfile, out, callback);
+		} else {
+			// console.log(out, "");
+			callback(null, out);
+		}
 	});
 }
 
