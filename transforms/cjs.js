@@ -7,6 +7,7 @@
  * @return {Stream}
  * @api public
  */
+'use strict';
 module.exports = function(ast) {
 	return ast;
 };

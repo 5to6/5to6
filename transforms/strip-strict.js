@@ -6,6 +6,8 @@
  * @api public
  */
 
+'use strict'; // the irony
+
 var estraverse = require('estraverse');
 
 module.exports = function (ast) {

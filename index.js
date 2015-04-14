@@ -1,3 +1,9 @@
+/**
+ * 5to6 - Take your project into the future.
+ */
+
+'use strict';
+
 var async = require('async');
 var fs = require('fs');
 var path = require('path');
@@ -31,7 +37,9 @@ function applyTransforms(options, callback) {
 
 	fs.readFile(path.resolve(filename), { encoding: 'utf8' }, function(err, data) {
 		var ast, out, transform;
-		if (err) return callback(err);
+		if (err) {
+			return callback(err);
+		}
 		try {
 			ast = espree.parse(data, {
 				attachComment: true,
@@ -79,7 +87,7 @@ function applyTransforms(options, callback) {
  * @param files {Array}
  * @param options.outDir {String}
  */
-module.exports = function(files, options) {
+function to6(files, options) {
 
 	// require that files are provided
 	if (files.length === 0) {
@@ -90,6 +98,8 @@ module.exports = function(files, options) {
 		options.filename = filename;
 		applyTransforms(options, callback);
 	}, function(err) {
-		report(err, files)
+		report(err, files);
 	});
 }
+
+module.exports = to6;

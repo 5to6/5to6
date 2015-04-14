@@ -1,11 +1,13 @@
 /**
- * This transform moves to object shorthand for method
+ * This transform moves to object shorthand for methods
  * & properties.
  *
  * @param {String} file
  * @return {Stream}
  * @api public
  */
+
+'use strict';
 
 var estraverse = require('estraverse');
 
@@ -19,7 +21,6 @@ module.exports = function (ast) {
 				}
 				if (node.value.type === 'Identifier' && node.value.name === node.key.name) {
 					node.shorthand = true;
-					console.log("JACKPOT!");
 				}
 			}
 		}
