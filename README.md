@@ -12,6 +12,8 @@ Options:
 
 -h, --help           output usage information
 -V, --version        output the version number
+-o, --show-output    display all of the output
+-r, --dry-run        output the files that will be changed
 -d, --out-dir [dir]  Directory for the output
 
 ```
@@ -48,15 +50,13 @@ Applied 2 transforms to 3 file(s) in 29 ms.
 - [ ] Finish the CLI
 - [x] AMD to CJS Modules
 - [x] strip "use strict" statements
+- [x] Enhanced object literals (methods & properties)
+- [x] CJS to ES6 Modules
 - [ ] AMD to ES6 Modules
-- [ ] CJS to ES6 Modules
 - [ ] IIFE to ES6 Modules
 - [ ] Prototype to `Class`
 - [ ] Functions to `=>`
-- [ ] Enhanced object literals
-  - `{baz: baz}` to `{baz}`
-  - `{foo: function() {}}` to `{foo() {}}`
-
+- [ ] `var` to `let`
 
 ### Ideas
 

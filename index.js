@@ -43,6 +43,7 @@ function applyTransforms(options, callback) {
 		try {
 			ast = espree.parse(data, {
 				attachComment: true,
+				loc: true,
 				range: true,
 				tokens: true
 			});
@@ -73,10 +74,14 @@ function applyTransforms(options, callback) {
 
 		var outfile = path.resolve(outDir, filename);
 		console.log('Writing ' + outfile);
+
+		if (options.showOutput) {
+			console.log(out, '');
+		}
+
 		if (!options.dryRun) {
 			fs.writeFile(outfile, out, callback);
 		} else {
-			// console.log(out, "");
 			callback(null, out);
 		}
 	});
