@@ -61,6 +61,10 @@ module.exports = function (ast) {
 					return decl.init.type === 'CallExpression' && decl.init.callee.name === 'require';
 				}).map(requireToImport);
 
+				if (localRequires.length === 0) {
+					return this.skip();
+				}
+
 				// global requires
 				importStatements = importStatements.concat(localRequires);
 

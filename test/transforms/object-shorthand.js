@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var transform = require('../transforms/object-shorthand');
+var transform = require('../../transforms/object-shorthand');
 var fs = require('fs');
 var espree = require('espree');
 var path = require('path');

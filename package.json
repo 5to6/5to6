@@ -4,7 +4,7 @@
   "description": "collection of tools to help you move your codebase forward",
   "main": "index.js",
   "scripts": {
-    "test": "eslint . && mocha test/"
+    "test": "eslint . && mocha test/ test/transforms"
   },
   "bin": {
     "5to6": "./bin/5to6"

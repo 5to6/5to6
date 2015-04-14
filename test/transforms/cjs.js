@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var transform = require('../transforms/cjs');
+var transform = require('../../transforms/cjs');
 var fs = require('fs');
 var espree = require('espree');
 var path = require('path');

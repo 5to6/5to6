@@ -48,6 +48,7 @@ Applied 2 transforms to 3 file(s) in 29 ms.
 ### Todo
 
 - [ ] Finish the CLI
+- [x] `var` to `let`(basic)
 - [x] AMD to CJS Modules
 - [x] strip "use strict" statements
 - [x] Enhanced object literals (methods & properties)
@@ -56,7 +57,6 @@ Applied 2 transforms to 3 file(s) in 29 ms.
 - [ ] IIFE to ES6 Modules
 - [ ] Prototype to `Class`
 - [ ] Functions to `=>`
-- [ ] `var` to `let`
 
 ### Ideas
 
