@@ -10,7 +10,8 @@ var path = require('path');
 var espree = require('espree');
 var escodegen = require('escodegen');
 var startTime = Date.now();
-var transforms = require('requireindex')('./transforms');
+var TRANSFORMS = require('requireindex')('./transforms');
+var recast = require("recast");
 // var util = require('util');
 
 /**
@@ -22,7 +23,7 @@ function report(err, files) {
 	if (err) {
 		return console.error(err.stack);
 	}
-	console.log('Applied ' + Object.keys(transforms).length + ' transforms to ' + files.length + ' file(s) in ' + (Date.now() - startTime) + ' ms.');
+	console.log('Applied ' + Object.keys(TRANSFORMS).length + ' transforms to ' + files.length + ' file(s) in ' + (Date.now() - startTime) + ' ms.');
 }
 
 /**
@@ -36,38 +37,40 @@ function applyTransforms(options, callback) {
 	var outDir = options.outDir;
 
 	fs.readFile(path.resolve(filename), { encoding: 'utf8' }, function(err, data) {
-		var ast, out, transform;
+		var ast, out;
 		if (err) {
 			return callback(err);
 		}
 		try {
-			ast = espree.parse(data, {
-				attachComment: true,
-				loc: true,
-				range: true,
-				tokens: true
-			});
+			ast = recast.parse(data);
+//			ast = espree.parse(data, {
+//				attachComment: true,
+//				loc: true,
+//				range: true,
+//				tokens: true
+//			});
 		} catch (e) {
 			return callback(new Error('Error parsing ' + filename));
 		}
 
 		// not sure if these are all sync or not
-		for (transform in transforms) {
-			ast = transforms[transform](ast);
-		}
+		options.transforms.forEach(function(transform) {
+			ast = TRANSFORMS[transform](ast);
+		});
 
 		try {
-			out = escodegen.generate(ast, {
-				comment: true,
-				format: {
-					preserveBlankLines: true, // TODO: make this actually work
-					indent: {
-						style: '\t', // TODO: make this all customizable
-						adjustMultilineComment: true
-					}
-				}
-
-			});
+			out = recast.print(ast).code;
+//			out = escodegen.generate(ast, {
+//				comment: true,
+//				format: {
+//					preserveBlankLines: true, // TODO: make this actually work
+//					indent: {
+//						style: '\t', // TODO: make this all customizable
+//						adjustMultilineComment: true
+//					}
+//				}
+//
+//			});
 		} catch(e) {
 			return callback(e);
 		}
@@ -93,6 +96,8 @@ function applyTransforms(options, callback) {
  * @param options.outDir {String}
  */
 function to6(files, options) {
+
+	options.transforms = options.transforms || Object.keys(TRANSFORMS);
 
 	// require that files are provided
 	if (files.length === 0) {

@@ -4,11 +4,13 @@ var program = require('commander');
 var pkg = require('../package.json');
 var to6 = require('../');
 var glob = require('glob');
+var path = require('path');
 
 program
 	.usage('[options] <file or dir ...>')
 	.description('Transform ES5 code on a file or directory into ES6 code.')
 	.version(pkg.version)
+	.option('-c, --config [file]', 'Use this config file', '5to6.config.js')
 	.option('-o, --show-output', 'Show all of the output as its being written')
 	.option('-r, --dry-run', 'Just do a dry run to see the output')
 	.option('-d, --out-dir [dir]', 'Directory for the output', '/tmp/5to6')
@@ -39,7 +41,15 @@ if (files.length === 1 && isDir(files[0])) {
 	});
 }
 
+var config;
+try {
+	config = require(path.resolve(program.config));
+} catch(e) {
+	config = {};
+}
+
 to6(files, {
+	transforms: config.transforms,
 	showOutput: program.showOutput,
 	dryRun: program.dryRun,
 	outDir: program.outDir
