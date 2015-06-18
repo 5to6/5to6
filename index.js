@@ -10,7 +10,7 @@ var path = require('path');
 var espree = require('espree');
 var escodegen = require('escodegen');
 var startTime = Date.now();
-var transforms = require('requireindex')('./transforms');
+var transforms = require('requireindex')(path.join(__dirname, 'transforms'));
 // var util = require('util');
 
 /**
